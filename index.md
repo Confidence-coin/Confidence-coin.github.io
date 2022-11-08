@@ -35,5 +35,5 @@ The DTP brings a lot of benefits to the user.
 
 ## Pending Patent
 
-DTP is a pending patent application. 
+DTP is a pending patent application. No one but Confidence Coin will use it.
 
