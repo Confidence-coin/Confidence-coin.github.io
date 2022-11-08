@@ -6,7 +6,8 @@ If to answer this question, you are going to your bank app/website to read some 
 You got zero money of your own. And if you don't believe me, go to your bank and ask for it.
 
 Confidence Coin is a development cryptocurrency with a pending patent to solve this exact problem.
-With Confidence Coin, you don't need to ask your bank for your money, you take it, and it's called:
+With Confidence Coin, you don't need to ask your bank for your money, you just take it. 
+It's called DTP.
 
 ## Decentralized Trusted Party
 
