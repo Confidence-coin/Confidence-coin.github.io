@@ -1,40 +1,39 @@
 # Confidence Coin
 
-How much money do you have in your bank account?
-If to answer this question, you are going to your bank app/website to read some numbers. You're probably mistaken.
+There are two types of currencies in the world, centralized and decentralized: Black and white.
 
-You got zero money of your own. And if you don't believe me, go to your bank and ask for it.
+Confidence coin is the new color. 
+It takes the idea of locally centralized trusted parties and binds them under a decentralized umbrella, creating something new. 
+It's called Decentralized Trusted Party(DTP).
 
-Confidence Coin is a development cryptocurrency with a pending patent to solve this exact problem.
-With Confidence Coin, you don't need to ask your bank for your money, you just take it. 
-It's called DTP.
+How does it work?
 
-## Decentralized Trusted Party
+DTP is a third party that controls users' wallets and performs transactions on their behalf, everyone can start a DTP, but It is expected that DTP will be a legal company in the US.
 
-1. With Confidence Coin, you can create a Decentralized Trusted Party(DTP) wallet.
-2. Then, other users can give the DTP control over their wallets.
-3. Once a period(a week or a month), the DTP must make an update transaction, or else the control of the wallets will return to wallet owners.
+The idea is that DTP will perform off-chain transactions and later commit them to the blockchain. The Confidence Coin algorithm enforces DTP to perform a periodic update transaction to update the balance of all its users. It is done in a very efficient way. To update the balance of 1,000,000 users, the transaction will only require 3.8 to 11.4 MB. 
 
-In the update transaction, the DTP updates at once the balance of all the wallets it controls. 
+DTP doesn't have access to users` private keys. Users use the blockchain protocol to give DTP control over their wallet, and they can revoke it in the same way. More details in white papers describe how Confidence Coin solves the race condition problems between off-chain and blockchain transactions. For now, let me tell you more about what DTP can do.
 
-## Paypal Example
+The DTP can move coins from wallets in the DTP group(Owned by users who authorized DTP to control their wallets) to external wallets. It is done via a regular transaction over a blockchain. 
 
-Paypal is an excellent example of DTP. They have their monetary system. 
+The DTP can create new wallets, but it still doesn't get access to wallets' private keys. A user needs to generate a public and private key and share the public key with the DTP. The DTP will then be able to send coins to the new public key, and a new wallet will be created in the system and automatically added to the DTP group.
 
-1. Users entrust Paypal with their wallet
-2. And make off-chain transactions using Paypal monetary system.
-3. Once a week, every user can verify their real balance by looking into the blockchain logs of the recent Paypal update transaction.
+Here are a few examples to demonstrate how this all may look like
+## DTP Examples
+### Target® DTP
+Target® creates DTP and offer zero fee and instant transactions. 
+Customers use the blockchain to join the Target® DTP group. 
 
-# Its's a new game
+Target® is happy because it spends less money on Confidence Coin transaction fees and DTP server costs compared to the fees it pays for the credit card companies.
+Target® DTP group customers are happy because they get more promotions and enjoy the same purchase experience as with Google or Apple Pay.
+### CoinBase® DTP
+CoinBase® creates DTP and offers to purchase and trade Confidence Coin on its platform.
 
-The DTP brings a lot of benefits to the user.
+CoinBase® is happy because it has less responsibility for protecting user coins. Most of the protection comes directly from the Confidence Coin algorithm.
+Users are happy because they don't need CoinBase® permission to extract their coins from CoinBase®.
 
-1. Lower transaction fees, since they are done off-chain
-2. Fast and unlimited transactions. As fast as Papal/Bank can go
-3. Transparency - You can trust Paypal because you see the actual movement of your money over the blockchain.
-4. No need to ask for permission to get your money back. You can request your wallet ownership at any time.
+## Confidence Coin Adoption
+It's easy to see DTP benefits for the users and DTP owners. But there is a benefit for the entire system.
+Transactions become more controllable by making most transactions run off the chain. Government can better protect Confidence Coin users from fraudulent activity and Money laundering. It's also a strong argument for the government to accept this coin.
 
-## Pending Patent
-
-DTP is a pending patent application. No one but Confidence Coin will use it.
-
+Off-chain transactions also offer more privacy for users since those transactions are not publicly broadcast.
