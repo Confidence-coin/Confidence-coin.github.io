@@ -1,6 +1,10 @@
 # Confidence Coin
 
-**NEWS**: Confidence Coin will use the [Flash Consensus algorithm](Flash-Consensus-algorithm)
+# NEWS
+
+ - Confidence Coin will use the [Flash Consensus algorithm](Flash-Consensus-algorithm/)
+ - Confidence Coin is looking for investors - See the [Pitch Deck video](https://www.youtube.com/watch?v=2jKPPrHeO5w) for more details
+
 
 ------
 
