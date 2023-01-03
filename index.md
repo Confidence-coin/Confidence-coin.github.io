@@ -1,5 +1,9 @@
 # Confidence Coin
 
+**NEWS**: Confidence Coin will use the [Flash Consensus algorithm](Flash-Consensus-algorithm)
+
+------
+
 There are two types of currencies in the world, centralized and decentralized: Black and white.
 
 Confidence coin is the new color. 
