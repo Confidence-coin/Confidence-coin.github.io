@@ -1,5 +1,5 @@
 # Flash Consensus algorithm
-*v1.1 last update: 1/20/2023*
+*v1.1 last update: 1/12/2023*
 
 Flash offers the **fastest possible** transaction per second time(TPS). Nothing blocks a transaction from being added to the blockchain. When Wallets send transactions, they are instantly added.
  - No waiting for blocks to be shared in the network
