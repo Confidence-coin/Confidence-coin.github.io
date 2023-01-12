@@ -1,58 +1,86 @@
 # Flash Consensus algorithm
-Flash offers the fastest possible transaction per second time(TPS). It means that it has zero synchronization. When new transactions are submitted, they are instantly added to the blockchain.
+*v1.1 last update: 1/20/2023*
+
+Flash offers the **fastest possible** transaction per second time(TPS). Nothing blocks a transaction from being added to the blockchain. When Wallets send transactions, they are instantly added.
  - No waiting for blocks to be shared in the network
  - No waiting for voting
- - No leader nodes synching between themself
+ - No waiting for leader nodes to sync between themself
  - No waiting, period!
 
-The TPS is only limited by the network performance, it's not just fast, but it's mathematically the fastest(TPS) possible consensus solution. 
+The network performance is the only TPS limitation. It's not just fast but mathematically the fastest(TPS) possible consensus solution. 
+
 ## Flash nodes
-There is only one type of node in Flash - Validators
-Users use wallet apps to send transactions to validators. Validators then verify those transactions and add them to the blockchain.
+There are two types of nodes in Flash, Validators, and Wallets.
 
-There is no transactions pool in Flash. When wallets send transactions to validators, validators create new blocks and share them with the network.
-Validators use only one command to reach a consensus - Share a block.
-I will keep the network implementation abstract here. The network must allow a validator to share a block and have all the peers on the network receive it.
-Block references/links
-Flash uses a directed acyclic graph (DAG) to store blocks. Each block references the hashes of the last N blocks known to the validator, where N is the number of nodes in the network. To illustrate the size of it, let's use Bitcoin as an example. Based on bitnodes.io, Tue Jan 3 09:46:24 2023 EST, Bitcoin has 15,567 nodes. It has a hash size of 32 bytes, so referencing all the nodes adds up to 32 * 15,567 = 486KB.
+Validators create and validate blocks, while Wallets create new transactions. Both Validators and Wallets share blocks. 
 
-Note that the references are part of the block and hashed together with the rest of it. It is infeasible to break the DAG with cycling reference since that implies solving a hash collision problem.
-## Consensus 
-Flash reaches consensus by looking into the referencing blocks. When a block is referenced by more than ⅔ of the validators, it is considered committed and immutable.
+There is no transactions pool in Flash. 
+Wallets send transactions to Validators
+Validators create new blocks with those transactions and share them with the network.
+Done - consensus is reached. Let's see how this magic works.
 
-There are several additional rules that I will go over, but at this point, it must be clear to you how Flash is so fast. All it takes to push a transaction into the blockchain is to share it with the network. Each validator is doing that in parallel, and nothing is synchronized.
-### Zero transaction blocks
-Blocks serve two purposes, they contain transactions, and they reference other blocks. It works like a voting system. 
-There could be a situation where transactions are not sent evenly to all the nodes. Some produce many blocks, and some are none. It's a problematic situation since it means that validation will not work. To avoid this situation, a stabilization mechanism is needed, pressure management on the validator level, and a minimum block time. Validators must create blocks every few seconds, or their vote will be lost. This is why blocks without transactions are valid in the system.
-You may argue that blocks with zero transactions are a deviation from the mathematical TPS perfection, but it will only be the case for yang cryptos. Once the system is more established, it will become unlikely to see blocks with no transactions. Still, it is an important point to note.
-## Invalid transactions
-When validators receive a block evaluated as valid by another validator, still the validator decides that some of the transactions in that block are invalid, the validator will not reject the block; instead, it will log the invalid transactions in the next block that it will create.
+# The Consensus magic
+To reach a consensus, Validators validate all the blocks of each other. They vote on various topics from other blocks in each new block they create. It is structured as follows:
+Block Hash
+Transactions Topic
+Unapproved transaction index as it appears in the original block referenced above. If it's not mentioned, it is considered approved.
+New Validators Topic
+...
+Once 2/3 of the validators approve an item, it is considered final. Even if all the items in a block are rejected, or it has non, it is still added to the blockchain since it contains voting information on other blocks.
 
-## Block structure
- - Transactions
- - Reference to other blocks
- - Reference to invalid transactions - this could be the index of the transaction in a block.
- - Signature(and optionally the identity) of the validator who created the block
-A block hash - A hash of the above items
+Blocks are enumerated. A Validator must vote for the Ns blocks when producing the N+1 block. While waiting for other validators to share their blocks, it collects transactions and other topics and will flush it all in the next block. There is no algorithmic limit on the block size.
 
-Note that there are no timestamps and no enumerators in the above structure; both are security risks that do not exist in Flash.
-## Validate the validator
-When validators validate a block, they validate not only the transactions but the decision made by the creator of that block(another validator). It's convenient since the block contains all the inputs and outputs of a validator decision. 
-But let's not jump into this. It's outside the scope of this article. Let's talk more about transaction validation.
-## Double spent attack
-To double spent a coin, one needs to make a transaction(T1), then have ⅔ of the nodes mark it as valid(keep it out of the invalid transactions list), and then do it again(T2) while double spending the coin. Let's consider all the options here:
+There are a few extra conditions here to address connectivity. But at this point, you should be able to see the power of Flash.
+Blocks are validated simultaneously. 
+Blocks are added simultaneously to the blockchain.
+No time is wasted on sharing transactions. Transactions are instantly added to a block that becomes part of the blockchain once it is shared.
+## Connectivity
+With Flash, the network is taken to the limit. The system operates at maximum network capacity.
+There are no timers.
+No queues
+No acks
+No limits! 
 
-1. A validator gets T1 after T1 is fully committed. It gets T2 - the validator approves T1 since there are coins in the sending wallet, but it will reject T2 since there will be an insufficient balance for the requesting wallet. In such a case, the transaction will not even be included in the block.
-2. A validator gets T1, and before it is fully committed, it gets T2 - The validator will approve T1 and will reject T2 since that validator is consistent with its actions, and if T1 is valid, then T2 cannot be. Some validators may also get T2 before T1. In such a case, the decision will be reversed. But due to the pigeon effect, the invalid transaction can get at most 50% of the approvals. Beyond that, the validators must be aware of the other transaction, and they will rule it out.
-3. What will happen if ⅓ of the validators are compromised? In such a case, if you can make ⅓ of the honest validator approve T1 and have the other ⅓ approve T2, then the compromised validators can approve both T1 and T2. They will be able to reach ⅔ of approvals but not over ⅔ as required by Flash. In reality, it will be very difficult to manipulate the network in such a way. 
+The moment a Validator gets all its blocks, it generates a new one, and the cycle repeats. The system is massively parallelized.
 
-The best defense Flash has against compromised validators is the traces they leave behind. The honest validators will be able to detect bad decisions the compromised validators made and take action against them.
-## Summary
-I kept the description of Flash very abstract on purpose. Flash can be adapted to both PoS and PoW, with an arbitrary hash algorithm and choice of network.
-Flash provides the fastest possible TPS and a very fast confirmation time.
+Now let's talk about reality. Rules need to be placed for occasions when Validators go offline or leggy. To that end, knowing how many blocks a Validator should expect to get in each cycle is essential.
 
-Flash is a decentralized and secure consensus algorithm. I plan to use it in [Confidence Coin](https://confidence-coin.com).
+## Hello Validators List
+The network is managing a validators list. In that list, each Validator is scored for performance. The faster the system can produce blocks, the better.
+There is a particular topic to vote for the addition and removal of validators from that list. It creates a consensus around how many validators are in each block cycle.
 
+There are three scores for performance: Green (Default), Yellow, and Red.
+They are selected based on the time it takes to receive a block from a Verifier, for example: 
+Zero to one minute -> Green
+One to two minutes -> Yellow
+Over two minutes -> Red
+Yellow and green are the best. It allows for maximizing the network performance to the limit. 
+A Red score is when a block was not received within the time limit. In such a case, a Validator will submit a block and not evaluate the red Validators.
+A yellow score will indicate how long it took to receive a block.
 
+During each iteration, The top 1% validators(From the total validators number, rounded up) who got a yellow score by more than 2/3 of validators will be removed. They are ranked based on the total cumulative waiting time in nanoseconds. And in the unlikely case of even, the decision could be made based on the Validator's identity or block hashes.
 
+If some validators gave a Red score, and others gave a Yellow score for the same Validator, the Red will be treated as Yellow.
 
+In case over 2/3 of the Validator scored a Validator as Red, it is removed.
+
+After removing Red validators, the next block score times increase.
+
+If all the validators got a green score, the score time would be reduced. The particular logic for time shrinking depends on the implementation.
+
+The idea is to decide the time dynamically. Such that if the Validators upgrade their gear, the time settings adapt accordingly.
+
+## Join the game - How are new validators added?
+
+Each Validator can nominate new Validators to join. It is put to the vote, and a decision is made.
+There also should be a penalty for rejoining the Validators list.
+
+## Block Structure
+ - block id - a running number
+ - Validator id - It could be a wallet address for rewards or another identifier. All the blocks produced by a validator should have the same validator id.
+ - block hashes - this is the voting system described in "The Consensus magic."
+   - topics - optional data topics. It could include:
+    - transactions
+    - new validators
+    - some requests(like banning a validator or changing settings)
+ - hash of this block - It can also serve as InfoHash in BitTorrent
