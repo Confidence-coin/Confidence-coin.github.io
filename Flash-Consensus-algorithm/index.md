@@ -113,7 +113,7 @@ One of those transactions may get over 2/3 Validator's votes, but there are not 
 Validator votes are part of the blockchain. Not only that the blockchain will record two conflicting blocks, but it will also record who were the validators who allowed it. 
 When the genuine validators see that, they will automatically remove the compromised validators from the validators list.
 
-** Network attack
+## Network attack
 There is no motivation for compromised Validators to perform attacks since there is no way to double-spend coins. 
 So the motivation to run an attack is pure evil — someone whose goal is to sabotage the system.
 
