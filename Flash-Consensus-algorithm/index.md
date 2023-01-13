@@ -84,3 +84,43 @@ There also should be a penalty for rejoining the Validators list.
     - new validators
     - some requests(like banning a validator or changing settings)
  - hash of this block - It can also serve as InfoHash in BitTorrent
+
+## Reword system
+Flash is built for performance and rewards performance. Every 100 blocks, the top 50% of the validators receive new coins from the system. They are scored by Red/Yellow/Green color votes and the number of block hashes they referred to in their blocks. This is to disincentivize voting Red.
+
+# Attacks
+
+## Double-spending attack
+Unlike PoW and many other consensuses, Flash is highly resistant to the double-spend attack since there are no forks in the system. All the blocks are valid and become part of the blockchain. 
+
+But still, let's review the possible cases on Flash.
+
+**Case 1**: A wallet attempts to double-spend a coin in block 19(Each validator produce block 19) after spending it in block 10.
+
+A validator has knowledge about all the blocks up to 19 in the blockchain. It will detect the attack and not even add the transaction.
+
+**Case 2**: A wallet attempts to double-spend a coin by sending two transactions simultaneously to the same Validator.
+
+A Validator will decline the second transaction. It will have no record in the blockchain.
+
+**Case 3**: A wallet attempts to double-spend a coin by sending two transactions simultaneously to different Validators.
+
+Each Validator will approve the transaction and add it to the block it creates. When other Validators receive those blocks, they will randomly approve one transaction and reject the other since they are looking at the full blockchain picture and waiting for all the blocks from all the validators before making a vote. 
+One of those transactions may get over 2/3 Validator's votes, but there are not enough votes to approve both of them.
+
+**Case 4**: A wallet attempts to double-spend a coin by sending two transactions simultaneously to different Validators, and 90% of the validators are compromised and willing to help.
+
+Validator votes are part of the blockchain. Not only that the blockchain will record two conflicting blocks, but it will also record who were the validators who allowed it. 
+When the genuine validators see that, they will automatically remove the compromised validators from the validators list.
+
+** Network attack
+There is no motivation for compromised Validators to perform attacks since there is no way to double-spend coins. 
+So the motivation to run an attack is pure evil — someone whose goal is to sabotage the system.
+
+Flash uses the Red/Yellow/Green approach to maintain high networking performance. 
+Flash is consistently accounting for all the nodes. If some nodes become slow or inaccessible, they will be removed from the network.
+
+However, there is one case that needs to be covered. What will happen if more than 1/3 of the network becomes inaccessible?
+
+Flash doesn't provide a solution to that. Be it an attack or a large power outage. It doesn't cover by Flash. People will have to pick up the phone and manually troubleshoot it.
+
