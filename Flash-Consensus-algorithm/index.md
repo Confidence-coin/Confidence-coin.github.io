@@ -91,7 +91,7 @@ Flash is built for performance and rewards performance. Every 100 blocks, the to
 # Attacks
 
 ## Double-spending attack
-Unlike PoW and many other consensuses, Flash is highly resistant to the double-spend attack since there are no forks in the system. All the blocks are valid and become part of the blockchain. 
+Flash is highly resistant to the double-spend attack since there are no forks in the system. All the blocks are valid and become part of the blockchain. 
 
 But still, let's review the possible cases on Flash.
 
