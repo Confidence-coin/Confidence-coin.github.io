@@ -1,47 +1,40 @@
+
 # Confidence Coin
 
-# NEWS
-
- - Confidence Coin will use the [Flash Consensus algorithm](Flash-Consensus-algorithm/)
- - Confidence Coin is looking for investors - See the [Pitch Deck video](https://www.youtube.com/watch?v=6Pz0-9BCZxk) for more details
+[Project Status](project-status) | [Investors](investors) | [Whitepaper](whitepaper)
 
 
-------
+Confidence coin is a safe cryptocurrency. It is built to allow governments to protect it from crime and illegal activities.
 
-There are two types of currencies in the world, centralized and decentralized: Black and white.
+It uses a blockchain to achieve consensus on transaction validity. And it adds another wall to protect users from crime and increase trust.
 
-Confidence coin is the new color. 
-It takes the idea of locally centralized trusted parties and binds them under a decentralized umbrella, creating something new. 
-It's called Decentralized Trusted Party(DTP).
+It is based on a revolutionary, pending patent idea of "A system for transferring cryptocurrency between a plurality of wallets, without revealing an origin or a destination or encrypted, origin or a destination"
 
-How does it work?
+In Confidence Coin, users make all their transactions using a DTP, a Decentralized Trusted Party. DTP is a legal company that uses government protection to shield users from crime and illegal activities in the crypto world.
 
-DTP is a third party that controls users' wallets and performs transactions on their behalf, everyone can start a DTP, but It is expected that DTP will be a legal company in the US.
+DTP is not "a company" but rather an idea. An idea baked deeply into the Confidence Coin blockchain.
+Everyone can create a DTP, but this great power comes with great responsibilities, making it suitable primarily for companies.
 
-The idea is that DTP will perform off-chain transactions and later commit them to the blockchain. The Confidence Coin algorithm enforces DTP to perform a periodic update transaction to update the balance of all its users. It is done in a very efficient way. To update the balance of 1,000,000 users, the transaction will only require 3.8 to 11.4 MB. 
+Each user in Confidence Coin has one or multiple wallets. But as mentioned earlier, they can't access their coins by themself, so they need a DTP.
+Users use the blockchain to select a DTP that will control their wallet. The DTP doesn't have access to users' private keys, and the users can revoke this control.
 
-DTP doesn't have access to users` private keys. Users use the blockchain protocol to give DTP control over their wallet, and they can revoke it in the same way. More details in white papers describe how Confidence Coin solves the race condition problems between off-chain and blockchain transactions. For now, let me tell you more about what DTP can do.
+## So, how DTP works?
 
-The DTP can move coins from wallets in the DTP group(Owned by users who authorized DTP to control their wallets) to external wallets. It is done via a regular transaction over a blockchain. 
+ - Users give DTP control to their wallet via the blockchain.
+ - DTP has its own monetary system that allows users to make off-chain transactions with other users inside the DTP group. 
+ - Confidence Coin requires DTP to make periodic update transactions to sync the balance of the users inside the DTP group to their balance on the blockchain.
+ - If DTP fails or misses an update transaction, it loses control over all the users' wallets. So it is strongly motivated not to miss it.
+ - DTP can also send coins to wallets in other DTPs on behalf of the user. This is done over a regular transaction over a blockchain.
 
-The DTP can create new wallets, but it still doesn't get access to wallets' private keys. A user needs to generate a public and private key and share the public key with the DTP. The DTP will then be able to send coins to the new public key, and a new wallet will be created in the system and automatically added to the DTP group.
+## Why would companies use DTP?
+Because it is cheaper!
 
-Here are a few examples to demonstrate how this all may look like
-## DTP Examples
-### Target® DTP
-Target® creates DTP and offer zero fee and instant transactions. 
-Customers use the blockchain to join the Target® DTP group. 
+Credit cards take a fee for each transaction, but in Confidence Coin, there is only one fee for the update transactions. It is cheaper than credit cards by order of magnitude.
 
-Target® is happy because it spends less money on Confidence Coin transaction fees and DTP server costs compared to the fees it pays for the credit card companies.
-Target® DTP group customers are happy because they get more promotions and enjoy the same purchase experience as with Google or Apple Pay.
-### CoinBase® DTP
-CoinBase® creates DTP and offers to purchase and trade Confidence Coin on its platform.
+It is economically beneficial for companies to charge users using DTP instead of a credit card.
 
-CoinBase® is happy because it has less responsibility for protecting user coins. Most of the protection comes directly from the Confidence Coin algorithm.
-Users are happy because they don't need CoinBase® permission to extract their coins from CoinBase®.
-
-## Confidence Coin Adoption
-It's easy to see DTP benefits for the users and DTP owners. But there is a benefit for the entire system.
-Transactions become more controllable by making most transactions run off the chain. Government can better protect Confidence Coin users from fraudulent activity and Money laundering. It's also a strong argument for the government to accept this coin.
-
-Off-chain transactions also offer more privacy for users since those transactions are not publicly broadcast.
+## Why would users use DTP?
+ - It is as secure as Google or Apple pay services.
+ - Users wallet balance is not shared with the seller, unlike in other cryptocurrencies with a public ledger
+ - Off-chain transactions are instantaneous. 
+ - The government protects companies and their users from illegal activities.
