@@ -6,3 +6,4 @@
 # Contact us
  - [LinkedIn](https://www.linkedin.com/in/ilyagazman/)
  - [Email](mailto:gazman1986@email.com)
+ - {% email gazman1986@gmail.com %}
