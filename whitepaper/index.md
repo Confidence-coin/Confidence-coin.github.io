@@ -6,10 +6,10 @@ Before reading, please review the [Flash consensus](/Flash-Consensus-algorithm/)
 At a very high level, the prime goal of the system is to allow DTPs to perform update transactions with millions of users. And will enable each Wallet to opt-in and out from DTP groups. We will have a few vast and small blocks in the system. 
 
 ## System nodes
-The system has three nodes: Wallets, DTPs, and Validators.
-Wallets will opt in and opt out from DTPs
-DTPs will make aggregated transactions with potentially millions of wallets involved.
-Validators will validate and create blocks.
+ - The system has three nodes: Wallets, DTPs, and Validators.
+ - Wallets will opt in and opt out from DTPs
+ - DTPs will make aggregated transactions with potentially millions of wallets involved.
+ - Validators will validate and create blocks.
 
 ## Consensus
 Blocks are enumerated with block IDs. Each Validator creates a block with the same ID value. It then shares it with other validators.
@@ -28,42 +28,42 @@ A topic is approved if it receives 2/3 votes of all the Validators.
 Topics include transactions, opting requests, scoring, and more. 
 
 ## Network
-Confidence Coin uses three networks
-IPFS & IPNS
-libp2p gossip pubsub.
-HTTP
+ - Confidence Coin uses three networks
+ - IPFS & IPNS
+ - libp2p gossip pubsub.
+ - HTTP
 
 Validators publish new blocks over IPFS and announce the Content Identifier (CID) over pubsub. The CID must be signed with Curve25519. Only hashes signed by validators from the Validators list are considered valid. Other messages are dropped. This is to prevent DDOS attacks.
 
 Validator Id is Curve25519 public key. 
-It is also the Validator Wallet address for collecting block rewards. 
-The IPNS record name is generated from it
-It is used for signing a block, and the CID is sent over pubsub
+ - It is also the Validator Wallet address for collecting block rewards. 
+ - The IPNS record name is generated from it
+ - It is used for signing a block, and the CID is sent over pubsub
 
 After each block cycle, validators generate a snapshot of the entire blockchain and publish it over their IPNS. The sequence(version number) must be the block number. The IPNS must link to a directory that has a new file for each snapshot. Also, there is no requirement to have the entire blockchain there.
 
 Note that the snapshots directory and the files inside are not duplicated times the number of the Validators. There is a consensus about the content of those snapshots. All the Validators produce the same files that result in the same CIDs.
 
 It serves multiple purposes.
-A snapshot is the transaction acknowledgment that it is committed.
-It reduces the amount of storage Validators need to operate. They don't need the entire blockchain. The latest ten snapshots are enough.
-It allows efficient encoding. After building a snapshot, each Wallet receives a short id. This id can be used in DTP update transactions to reduce the block size. 
+ 1. A snapshot is the transaction acknowledgment that it is committed.
+ 1. It reduces the amount of storage Validators need to operate. They don't need the entire blockchain. The latest ten snapshots are enough.
+ 1. It allows efficient encoding. After building a snapshot, each Wallet receives a short id. This id can be used in DTP update transactions to reduce the block size. 
 
 ## Blockchain snapshot structure
 It contains block time T, a new line, and then the below items, separated with a new line. Each item is a headless TSV list. The list terminates with a new line.
-Balance List - A balance of each user in Confidence Coin ordered by wallet id. 
-wallet id 
-balance
-Validators List - A validators list ordered by Validator id
-Validator id(As described above)
-Address - IPv4/v6 or a domain address. It is used for sending transactions.
-DTPs list
-DTP-id - the wallet id of the DTP
-update time - the update time of this DTP in seconds
-time to next update - time to next update as of the block creation time in seconds
-Wallets - comma-separated list of Wallets inside that DTP group, including the DTP Wallet itself, so this list can never be empty. Wallet ids are based on their order in the Balance List above, starting from 0
-Pending opt-out wallets - comma-separated list of Wallets inside that DTP group that will opt out after the next update transaction
-Pending opt-in wallets - comma-separated list of Wallets outside that DTP group that will opt in after the next update transaction in their DTP
+1. Balance List - A balance of each user in Confidence Coin ordered by wallet id. 
+   1. wallet id 
+   1. balance
+1. Validators List - A validators list ordered by Validator id
+   1. Validator id(As described above)
+   1. Address - IPv4/v6 or a domain address. It is used for sending transactions.
+1. DTPs list
+   1. DTP-id - the wallet id of the DTP
+   1. update time - the update time of this DTP in seconds
+   1. time to next update - time to next update as of the block creation time in seconds
+   1. Wallets - comma-separated list of Wallets inside that DTP group, including the DTP Wallet itself, so this list can never be empty. Wallet ids are based on their order in the Balance List above, starting from 0
+   1. Pending opt-out wallets - comma-separated list of Wallets inside that DTP group that will opt out after the next update transaction
+   1. Pending opt-in wallets - comma-separated list of Wallets outside that DTP group that will opt in after the next update transaction in their DTP
 
 ## Topics
 Wallets and DTPs create topic items. They use the HTTP protocol to contact Validators. The list of the HTTP remotes is obtained from the Validators list in the snapshot that is hosted on IPFS by all the Validators and some other Wallets and DTPs. Those are the most popular files in Confidence Coin.
@@ -99,9 +99,9 @@ Wallets can opt in and off to and from any DTP.
 
 ### Color Scoring
 There is a T seconds timeout waiting to get blocks from other validators.
-If a block was announced and downloaded(from IPFS) within 0.5T, it gets a GREEN score, and the times will be recorded.
-If it took less than T seconds to get an announcement and less than T seconds to get it from IPFS, then it scores YELLOW, and the times will be recorded.
-Otherwise, it gets RED, and the attempt to get the block should halt. -1 will be recorded in that case for time.
+ - If a block was announced and downloaded(from IPFS) within 0.5T, it gets a GREEN score, and the times will be recorded.
+ - If it took less than T seconds to get an announcement and less than T seconds to get it from IPFS, then it scores YELLOW, and the times will be recorded.
+ - Otherwise, it gets RED, and the attempt to get the block should halt. -1 will be recorded in that case for time.
 The top 1% of the total validators who scored RED by over 2/3 VALIDATORS are removed from the Validator list. They are ordered by the hash of the block id and the validator id. This is to create a random order.
 After removing Validators, T is doubled.
 
