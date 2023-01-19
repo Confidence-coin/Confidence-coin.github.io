@@ -22,18 +22,18 @@ Only the Validators from the Validators list are considered for voting.
 ### Embedded voting system
 The voting system is embedded in blocks. It saves time on communication and increases system security.
 
-Each block contains zero or many topics with one or many items. When Validators create block N+1, they vote for all the topics of N blocks. 
+Each block contains zero or many topics with one or many items. When Validators create block id N+1, they vote for all the topics of blocks with id N. 
 A topic is approved if it receives 2/3 votes of all the Validators.
 
 Topics include transactions, opting requests, scoring, and more. 
 
 ## Network
- - Confidence Coin uses three networks
- - IPFS & IPNS
- - libp2p gossip pubsub.
+Confidence Coin uses three networks
+ - [IPFS](https://docs.ipfs.tech/concepts/what-is-ipfs/#what-is-ipfs) & [IPNS](https://docs.ipfs.tech/concepts/ipns/#mutability-in-ipfs)
+ - [libp2p](https://libp2p.io/) [gossip pubsub](https://github.com/libp2p/specs/tree/master/pubsub).
  - HTTP
 
-Validators publish new blocks over IPFS and announce the Content Identifier (CID) over pubsub. The CID must be signed with Curve25519. Only hashes signed by validators from the Validators list are considered valid. Other messages are dropped. This is to prevent DDOS attacks.
+Validators publish new blocks over IPFS and announce the [Content Identifier (CID)](https://docs.ipfs.tech/concepts/content-addressing/) over pubsub. The CID must be signed with [Curve25519](https://en.wikipedia.org/wiki/Curve25519). Only hashes signed by validators from the Validators list are considered valid. Other messages are dropped. This is to prevent DDOS attacks.
 
 Validator Id is Curve25519 public key. 
  - It is also the Validator Wallet address for collecting block rewards. 
