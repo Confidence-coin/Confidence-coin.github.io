@@ -79,14 +79,18 @@ For example, the below documentation:
 |param 3| param3 description|
 
 Translates into the below JSON request
+```JSON
 {
 	"param1" : "data",
 	"param2" : "data",
 	"param3" : "data"
 }
+```
 
 And the below line in topics
+```
 param1	param2	param3
+```
 
 ### Opting requests
 Wallets can opt in and off to and from any DTP. 
