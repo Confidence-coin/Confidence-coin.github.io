@@ -192,8 +192,8 @@ Up to 50% penalty is deducted from the stake value based on the percentile posit
 ## Capacity
 There are 1,798,974,000,000 hard-cap coins. It was based on the dollar circulation value in Jan 2020, right before the epidemic started.
 
-The daily reward is calculated using the below function, where X is a day starting from 1.
-f(X) = Max(0, -2,700x + 98,563,309)
+The daily reward is calculated using the below function, where X is a day starting from 1.<br>
+$f(X)=Max(0,-2,700X + 98,563,309)$
 
 It will be fully mined in 36,505 days(~100 years). 
 
