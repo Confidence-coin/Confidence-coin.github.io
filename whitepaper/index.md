@@ -1,5 +1,5 @@
 # Confidence Coin whitepaper
-*v1.0 last updated 1/18/2023*
+*v1.0 last updated 1/25/2023([changelog](changelog/))*
 
 Before reading, please review the [Flash consensus](/Flash-Consensus-algorithm/), and read about [DTP](/).
 
@@ -7,7 +7,7 @@ At a very high level, the prime goal of the system is to allow DTPs to perform u
 
 ## System nodes
  - The system has three nodes: Wallets, DTPs, and Validators.
- - Wallets will opt in and opt out from DTPs
+ - Wallets will opt-in and opt out from DTPs
  - DTPs will make aggregated transactions with potentially millions of wallets involved.
  - Validators will validate and create blocks.
 
@@ -51,7 +51,7 @@ It serves multiple purposes.
 
 ## Blockchain snapshot structure
 It contains block time T, a new line, and then the below items, separated with a new line. Each item is a headless TSV list. The list terminates with a new line.
-1. Balance List - A balance of each user in Confidence Coin ordered by wallet id. 
+1. Balance List - Each user's balance in Confidence Coin is ordered by wallet id. 
    1. wallet id 
    1. balance
 1. Validators List - A validators list ordered by Validator id
@@ -87,7 +87,7 @@ Translates into the below JSON request
 }
 ```
 
-And the below line in topics
+And the below line in topics.
 ```
 param1	param2	param3
 ```
@@ -133,29 +133,19 @@ It must provide an update time in seconds for how often it will sync Wallet bala
 
 ### DTP update transaction
 DTP must perform an update transaction within the update time from its conversion to DTP or the last update transaction. If it fails, it loos all the Wallets in the DTP group and converts back to regular Wallet.
-DTP must not add or remove coins. The number of coins in the system before and after the update transaction should not change.
-
-During this transaction, DTP can also create new Wallets. Those Wallets will automatically become part of the DTP group.
+- DTP must not add or remove coins. The number of coins in the system before and after the update transaction should not change.
+ - DTP can include one or multiple of its Wallet members. At least one is required.
+ - DTP can also include Wallets that are not its member. The balance of those wallets cannot be decreased, only increased. It allows DTP to send coins to external Wallets without revealing the origin or the destination.
+ - DTP can also send coins to new Wallets. In such a case, it must decide to what DTP the new Wallet will belong. It must be an existing DTP or non at all.
 
 Only the Wallets ids and the new balance are required when making the transaction. The ids come from the Balance list in the Blockchain snapshot. The snapshot must be fresh from the last ten snapshots. DTP should try to use the latest.
 
 |param|description|
 |-|-|
 |Block id| Block id for wallets ids mapping|
-|new Wallet addresses| Comma-delimited list of new wallet address
+|new Wallet addresses| Comma-delimited list of new wallet addresses, optionally concatenated with the DTP address(Wallet address is fixed length).
 |Wallets ids| Comma-delimited list of Wallets ids from the Balance List|
 |balance ids| Comma-delimited list of balances corresponding to the Wallets ids and the new Wallets|
-|signature| Curve25519 signature of the DTP|
-
-### DTP external transaction
-DTP can send coins to other DTPs on behalf of the Wallets. No Wallets signature is needed, and multiple transactions can be aggregated.
-
-|param|description|
-|-|-|
-|Block id| Block id for wallets ids mapping|
-|origin Wallets ids| Comma-delimited list of Wallets ids from the Balance List|
-|balance ids| Comma-delimited list of balances to transfer corresponding to the Wallets ids|
-|destination Wallets addresses| Comma-delimited list of Wallets addresses, those are no using ids since those could potentially be new Wallets|
 |signature| Curve25519 signature of the DTP|
 
 ### Opting
@@ -172,7 +162,7 @@ To synchronize the off-chain transactions inside the DTP with opting requests. W
 Blocks use JSON API and have the below structure:
 
  - Block id - A running integer
- - Block creation time - used for DTP update transaction calculations
+ - Block creation time - used for DTP update transaction calculations and block rewards
  - Validators list CID
  - Validator id - the validator id in the Validators list
  - Validator IP - an IPv4/v6 address or a domain name where topics can be submitted
@@ -184,3 +174,36 @@ Blocks use JSON API and have the below structure:
  - Validator signature of the fields above
 
 Note that there is no block hash in here. This is because the system is using CID.
+
+# Reward System
+
+## Block rewards
+Block time is calculated as the median block creation time of all the blocks with the same block id.
+
+Based on Block time, the system gives block rewards with the following block after the earliest block in a day, consisting of transaction fees and new coins.
+
+The reward is scored based on the stack, and there are penalties for scoring below 50% percentile in the below metrics.
+ - Number of blocks created - It incentivizes Validators to stay online.
+ - Number of Red scores sent - It decentivize validators to score Red.
+ - Number of transactions processed(Each type is scored individually) - It incentivizes Validators to process transactions.
+
+Up to 50% penalty is deducted from the stake value based on the percentile position rounded to integer percent.
+
+## Capacity
+There are 1,798,974,000,000 hard-cap coins. It was based on the dollar circulation value in Jan 2020, right before the epidemic started.
+
+The daily reward is calculated using the below function, where X is a day starting from 1.
+f(X) = Max(0, -2,700x + 98,563,309)
+
+It will be fully mined in 36,505 days(~100 years). 
+
+## Transaction fees
+In a system where all the transactions are processed, there is no point in setting up transaction fees incentive on a transaction level. However, the system is more open to transaction DDOS attacks without transaction fees. Therefore transaction fees are set on a system level per transaction type.
+
+Each day in the block follows the reward block. A vote is made to change the transaction fees. In case they are changed, the new value will be applied within a week of the change, starting from the block after the daily reward. The clock would be reset if additional changes were made during that time.
+
+## Confidence Coin foundation fee
+1% of the block rewards will be sent to the Confidence Coin Foundation Wallet. Instead of premining the coin or doing an IPO, we believe in a fair game. 
+Confidence Coin foundation will work hard to bring the Confidence Coin into the mainstream and maximize its value. 
+
+With a linear reward system, zero pre-mined coins, and a Foundation behind. Confidence Coin is set for success.
