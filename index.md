@@ -1,7 +1,7 @@
 
 # Confidence Coin
 
-[Project Status](project-status) | [Investors](investors) | [Whitepaper](whitepaper)
+[Project Status](project-status) | [Investors](investors) | [Whitepaper](whitepaper) | [Github](https://github.com/Confidence-coin/Coco)
 
 
 Confidence coin is a safe cryptocurrency. It is built to allow governments to protect it from crime and illegal activities.
