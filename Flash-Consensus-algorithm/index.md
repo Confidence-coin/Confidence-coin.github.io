@@ -11,7 +11,7 @@ Validators create and validate blocks, while Wallets create new transactions. Bo
 The blocks in Flash are unique due to their limitless size. This is enabled by the fact that a full system Snapshot is created after every block cycle, meaning information on a Wallet balance doesn't require downloading the entire blockchain but only the most recent Snapshot
 
 # Voting system
-The secret of Flash speed comes from consolidating transactions with validation logic. Validators vote on topics in other blocks and store their vote in the block they produce. Topics contain a variety of things, one of which are transactions. This way, there is only one communication channel between Validators: Share a block.
+The secret of Flash speed comes from consolidating transactions with validation logic. Validators vote on topics in other blocks and store their vote in the block they produce. Topics contain a variety of things, one of which are transactions. This way, transactions are quickly verified without having to go through multiple communication channels
 
 # Three steps Consensus
 To reach a consensus, each Validator runs the below steps in a loop.
