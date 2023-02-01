@@ -1,16 +1,15 @@
 # Flash Consensus algorithm
 *v1.2 last update: 2/1/2023*
 
-In Flash, each node produces a block, and all those blocks are tested/validated and added to the blockchain simultaneously.
-It's a cycling process that gives Flash an enormous transaction per second(TPS) speed.
+Flash is a consensus algorithm that enables fast blockchain transaction speeds due to its ability to process a large number of transactions per second (TPS). The algorithm achieves this by having each node produce a block and all the blocks being validated simultaneously. This cycling process creates an efficient loop that allows for faster processing.
 
 # Flash nodes
 There are two types of nodes in Flash, Validators and Wallets.
 Validators create and validate blocks, while Wallets create new transactions. Both Validators and Wallets help to propagate the blocks through the system.
 
 # Snapshots
-The blocks in Flash have no size limit. This is because a full system snapshot is created after each block cycle. To get information about a balance in a Wallet. One doesn't need to download the full blockchain but only the most recent Snapshot.
-Each Validator adds a running id to a block. After all the Validators produce block id N, a Snapshot N is created.
+The blocks in Flash are unique due to their limitless size. This is enabled by the fact that a full system Snapshot is created after every block cycle, meaning information on a Wallet balance doesn't require downloading the entire blockchain but only the most recent Snapshot
+
 # Voting system
 The secret of Flash speed comes from consolidating transactions with validation logic. Validators vote on topics in other blocks and store their vote in the block they produce. Topics contain a variety of things, one of which are transactions. This way, there is only one communication channel between Validators: Share a block.
 
