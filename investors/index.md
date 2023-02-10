@@ -1,4 +1,5 @@
 # Confidence Coin is Looking for Investors
+{% include header.md %}
 
  - [Pitch deck Youtube video](https://www.youtube.com/watch?v=6Pz0-9BCZxk)
  - [Pitch deck google slides](https://docs.google.com/presentation/d/1OMKAO8GPjUM9gSgODYrIE8wz79jblqllAQlusKp5BrQ/edit?usp=sharing)
