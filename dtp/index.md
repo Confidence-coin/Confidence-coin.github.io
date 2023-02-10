@@ -1,4 +1,5 @@
 # Decentralized Trusted Party
+</br>{% include header.md %}
 
 Decentralized Trusted Party(DTP), is a tool for secure and confidential transactions through a Confidence Coin blockchain. All transactions are required to be made via the DTP, as the encrypted details of the origin, destination, and transacting balance are kept confidential.
 
