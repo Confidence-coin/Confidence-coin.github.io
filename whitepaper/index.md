@@ -1,7 +1,7 @@
 # Confidence Coin whitepaper
 *v1.0 last updated 1/25/2023([changelog](changelog/))*
 
-Before reading, please review the [Flash consensus](/Flash-Consensus-algorithm/dtp/), and read about [DTP](/).
+Before reading, please review the [Flash consensus](/Flash-Consensus-algorithm/), and read about [DTP](/dtp/).
 
 At a very high level, the prime goal of the system is to allow DTPs to perform update transactions with millions of users. And will enable each Wallet to opt-in and out from DTP groups. We will have a few vast and small blocks in the system. 
 
