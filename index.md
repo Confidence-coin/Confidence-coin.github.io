@@ -1,8 +1,6 @@
 
 # Confidence Coin
-
-[Project Status](/project-status/) | [Investors](/investors/) | [Whitepaper](/whitepaper/) | [Github](https://github.com/Confidence-coin/Coco)
-
+{% include header.md %}
 
 Confidence Coin is a decentralized cryptocurrency powered by a [Flash consensus mechanism](/Flash-Consensus-algorithm/) and utilizing the [DTP](/dtp/) technology. It is designed to be the fastest cryptocurrency on the market, with the ability to process thousands and even millions of wallet transactions in one block.
 
