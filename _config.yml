@@ -1,4 +1,4 @@
-theme: jekyll-theme-hacker
+remote_theme: pages-themes/merlot@v0.2.0
 
 # Where things are
 source              : .
@@ -31,7 +31,7 @@ unpublished         : false
 
 # Plugins
 whitelist           : []
-plugins             : []
+plugins             : [jekyll-remote-theme]
 
 # Conversion
 markdown            : kramdown
