@@ -1,3 +1,5 @@
+theme: jekyll-theme-hacker
+
 # Where things are
 source              : .
 destination         : ./_site
