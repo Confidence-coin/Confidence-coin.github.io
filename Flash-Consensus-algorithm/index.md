@@ -1,6 +1,6 @@
 # The **Fast** Flash Consensus Algorithm
 *v1.2 last update: 2/8/2023*
-{% include header.md %}
+</br>{% include header.md %}
 
 The Fast Flash Consensus Algorithm is a speedy consensus mechanism for blockchain transactions. Its innovative design allows every node to generate and validate blocks at the same time, leading to a high transaction per second(TPS) rate, thereby ensuring quick and secure transactions.
 # Validators and Wallets in Flash
