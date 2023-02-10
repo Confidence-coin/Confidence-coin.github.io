@@ -1,5 +1,6 @@
 # Confidence Coin whitepaper
 *v1.0 last updated 1/25/2023([changelog](changelog/))*
+<br>{% include header.md %}
 
 Before reading, please review the [Flash consensus](/Flash-Consensus-algorithm/), and read about [DTP](/dtp/).
 
