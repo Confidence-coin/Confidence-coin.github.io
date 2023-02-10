@@ -1,5 +1,5 @@
 # Holders
-</br>{% include header.md %}
+{% include header.md %}
 
 The Confidence Coin blockchain is a unique and innovative platform that offers its holders a unique reward system. The block reward is split equally between the validators and the holders, ensuring that everyone who contributes to the network is fairly compensated.
 
