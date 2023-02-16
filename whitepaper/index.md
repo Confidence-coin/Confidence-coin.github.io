@@ -1,6 +1,8 @@
 # Confidence Coin whitepaper
 *v1.0 last updated 2/15/2023([changelog](changelog/))*
 
+{% include header.md %}
+
 # Introduction
 Confidence Coin is a decentralized cryptocurrency that utilizes a unique combination of [Flash consensus](/Flash-Consensus-algorithm/) and [Decentralized Trusted Party (DTP)](/dtp/) technology to provide fast and secure transactions with enhanced privacy features. It is designed to be the fastest cryptocurrency on the market, with the ability to process over a million transactions in a single block.
 One of the main features of Confidence Coin is its DTP technology, which provides a level of privacy that is not available with most other cryptocurrencies. By aggregating transactions and only revealing the final balance of wallets, the details of who sent coins to whom are not recorded on the ledger. In addition, the Flash consensus mechanism ensures that transactions are confirmed quickly and securely.
