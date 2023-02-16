@@ -1,211 +1,69 @@
 # Confidence Coin whitepaper
-*v1.0 last updated 1/25/2023([changelog](changelog/))*
+*v1.0 last updated 2/15/2023([changelog](changelog/))*
 
-{% include header.md %}
+# Introduction
+Confidence Coin is a decentralized cryptocurrency that utilizes a unique combination of [Flash consensus](/Flash-Consensus-algorithm/) and [Decentralized Trusted Party (DTP)](/dtp/) technology to provide fast and secure transactions with enhanced privacy features. It is designed to be the fastest cryptocurrency on the market, with the ability to process over a million transactions in a single block.
+One of the main features of Confidence Coin is its DTP technology, which provides a level of privacy that is not available with most other cryptocurrencies. By aggregating transactions and only revealing the final balance of wallets, the details of who sent coins to whom are not recorded on the ledger. In addition, the Flash consensus mechanism ensures that transactions are confirmed quickly and securely.
+In this whitepaper, we will explore the key features and benefits of Confidence Coin, including its fast transaction speeds, enhanced privacy features, and stable and self-sustaining ecosystem. We will also delve into the technical aspects of the Flash consensus mechanism and DTP technology, and provide an overview of the Confidence Coin incentive program. By the end of this paper, readers will have a comprehensive understanding of how Confidence Coin works and its potential to revolutionize the cryptocurrency industry.
 
-Before reading, please review the [Flash consensus](/Flash-Consensus-algorithm/), and read about [DTP](/dtp/).
+# Flash Consensus
+Flash Consensus is a unique consensus mechanism that powers Confidence Coin. It is designed to be a fast, efficient, and secure consensus mechanism that can process a high volume of transactions. Flash Consensus operates in a three-step process that validators run in a loop. This three-step process enables validators to achieve consensus efficiently.
 
-At a very high level, the prime goal of the system is to allow DTPs to perform update transactions with millions of users. And will enable each Wallet to opt-in and out from DTP groups. We will have a few vast and small blocks in the system. 
+The first step of Flash Consensus is Collect Blocks. Validators wait for each validator in the system to produce a block with the same ID, which is known as block N. The second step is Create a Snapshot. Validators examine the voting section of blocks N for transactions included in blocks N-1 and create a corresponding Snapshot (Snap N-1). The final step is Vote and Create a Block. Validators use Snap N-1 to cast votes on transactions in blocks N and create the next block (block N+1).
+The Flash Consensus mechanism allows for the creation of new Snapshots with each block cycle, ensuring a complete system record is always maintained. The simplicity of this process makes it efficient and allows for fast processing of a high volume of transactions. The use of Flash Consensus in Confidence Coin ensures that the blockchain is secure and can process transactions in a timely and efficient manner.
 
-## System nodes
- - The system has three nodes: Wallets, DTPs, and Validators.
- - Wallets will opt-in and opt out from DTPs
- - DTPs will make aggregated transactions with potentially millions of wallets involved.
- - Validators will validate and create blocks.
+# InterPlanetary File System (IPFS) and Confidence Coin
+[The InterPlanetary File System (IPFS)](https://docs.ipfs.tech/concepts/what-is-ipfs/#what-is-ipfs) is a distributed file system with a global namespace for files. It is ideal for the Confidence Coin network. Confidence Coin will use IPFS to share blocks and snapshots among validators.
 
-## Consensus
-Blocks are enumerated with block IDs. Each Validator creates a block with the same ID value. It then shares it with other validators.
-Once a Validator receives a block with ID N from all the validators, it creates a block with ID N+1 and shares it.
-The time between two block ids is called a block cycle.
+Confidence Coin uses a combination of three networks to operate: IPFS and [IPNS](https://docs.ipfs.tech/concepts/ipns/#mutability-in-ipfs), [libp2p](https://libp2p.io/) [gossip pubsub](https://github.com/libp2p/specs/tree/master/pubsub), and HTTP. Validators publish new blocks over IPFS and announce the [Content Identifier (CID)](https://docs.ipfs.tech/concepts/content-addressing/) over pubsub. The CID must be signed with [Curve25519](https://en.wikipedia.org/wiki/Curve25519). Only hashes signed by validators from the Validators list are considered valid, and other messages are dropped to prevent Distributed Denial of Service (DDOS) attacks.
 
-During the bootstrap process, all the Validators agree on a list of Validators and the current balance of all the wallets in Confidence Coin.
-Only the Validators from the Validators list are considered for voting.
+Each validator has a Validator ID, which is their Curve25519 public key. It is then used for signing a block and also serves as their Validator Wallet address for collecting block rewards. The IPNS record name is generated from the Validator ID and the CID is sent over pubsub by the validator when they publish a new block.
 
-### Embedded voting system
-The voting system is embedded in blocks. It saves time on communication and increases system security.
+After each block cycle, validators generate a snapshot of the entire blockchain and publish it over their IPNS. The sequence (version number) must be the block number. The IPNS must link to a directory that has a new file for each snapshot. Note that there is no requirement to have the entire blockchain there.
 
-Each block contains zero or many topics with one or many items. When Validators create block id N+1, they vote for all the topics of blocks with id N. 
-A topic is approved if it receives 2/3 votes of all the Validators.
+The snapshots directory and the files inside are not duplicated times the number of validators. There is a consensus about the content of those snapshots. All validators produce the same files that result in the same CIDs.
 
-Topics include transactions, opting requests, scoring, and more. 
+Using IPFS and IPNS serves multiple purposes for Confidence Coin. First, a snapshot is the transaction acknowledgment that it is committed. Second, it reduces the amount of storage validators need to operate. They don’t need the entire blockchain, only the last snapshot. Third, it allows efficient encoding. After building a snapshot, each wallet receives a short ID inside a DTP. This ID is used in DTP update transactions to reduce the block size.
 
-## Network
-Confidence Coin uses three networks
- - [IPFS](https://docs.ipfs.tech/concepts/what-is-ipfs/#what-is-ipfs) & [IPNS](https://docs.ipfs.tech/concepts/ipns/#mutability-in-ipfs)
- - [libp2p](https://libp2p.io/) [gossip pubsub](https://github.com/libp2p/specs/tree/master/pubsub).
- - HTTP
+Overall, IPFS and IPNS are essential components of the Confidence Coin network that enable the system to function in a fast, secure, and efficient manner.
 
-Validators publish new blocks over IPFS and announce the [Content Identifier (CID)](https://docs.ipfs.tech/concepts/content-addressing/) over pubsub. The CID must be signed with [Curve25519](https://en.wikipedia.org/wiki/Curve25519). Only hashes signed by validators from the Validators list are considered valid. Other messages are dropped. This is to prevent DDOS attacks.
+# DTP Technology
+Decentralized Trusted Party (DTP) is a proprietary tool developed for secure and confidential transactions through Confidence Coin blockchain. DTP aggregates multiple transactions and only reveals the final balance. This ensures that there is no record of origin, destination, and transacting balance. All transactions are required to be made via DTP, which operates as a legal company, allowing the government to monitor and prevent fraudulent and illegal activities in cryptocurrency transactions.
 
-Validator Id is Curve25519 public key. 
- - It is also the Validator Wallet address for collecting block rewards. 
- - The IPNS record name is generated from it
- - It is used for signing a block, and the CID is sent over pubsub
+The process of using DTP involves a wallet declaring itself as a DTP through the Confidence Coin blockchain, after which users can entrust their wallets to the DTP through the same blockchain. Users can then conduct transactions with one another and with external entities through the DTP's external monetary system. During an update transaction, the DTP has the capability to create new wallets and transfer the users' coins to these wallets if necessary. The DTP performs an update transaction on the blockchain to synchronize the wallet balances with the balances recorded on the blockchain.
 
-After each block cycle, validators generate a snapshot of the entire blockchain and publish it over their IPNS. The sequence(version number) must be the block number. The IPNS must link to a directory that has a new file for each snapshot. Also, there is no requirement to have the entire blockchain there.
+To ensure the integrity of the system, certain restrictions must be followed. The total number of coins in the system must remain unchanged both before and after a transaction, and the wallet balances outside of the DTP can only increase. Additionally, DTP must perform an update transaction every x days, as it declared in the blockchain, or risk losing the trust of all wallets. Also, wallets can revoke their trust from the DTP at any time through the blockchain.
 
-Note that the snapshots directory and the files inside are not duplicated times the number of the Validators. There is a consensus about the content of those snapshots. All the Validators produce the same files that result in the same CIDs.
+DTP not only offers increased privacy and security but also safety. By utilizing DTP, users can rest assured that their transactions are protected from malicious actors and in compliance with legal regulations.
 
-It serves multiple purposes.
- 1. A snapshot is the transaction acknowledgment that it is committed.
- 1. It reduces the amount of storage Validators need to operate. They don't need the entire blockchain. The latest ten snapshots are enough.
- 1. It allows efficient encoding. After building a snapshot, each Wallet receives a short id. This id can be used in DTP update transactions to reduce the block size. 
+# Holder-Sensitive Mechanism
+The Confidence Coin blockchain offers a unique reward system for its holders, which incentivizes them to hold their coins for longer periods and add more coins to their holdings.
+To encourage long-term holding, the Confidence Coin blockchain uses a baseline calculation that takes into account the number of coins held and the duration of holding. Each additional month of holding is multiplied by a factor of 1.016, which results in higher rewards for holders who keep their coins on hold for longer periods. This mechanism ensures that holders are incentivized to hold their coins for as long as possible, as the longer they hold, the higher the potential rewards.
+To further incentivize holders to add more coins to their holdings, the Confidence Coin blockchain implements a linear penalty mechanism that decreases rewards each day. This mechanism ensures that holders receive zero rewards on the last day of holding, encouraging them to add more coins to their holdings and hold them for longer periods. This mechanism helps to maintain a stable and consistent demand for Confidence Coin and prevent excessive selling and market volatility.
+In summary, the Confidence Coin blockchain offers a unique and innovative reward system for its holders, which incentivizes them to hold their coins for longer periods and add more coins to their holdings. This mechanism helps to ensure the stability and growth of the Confidence Coin blockchain network.
 
-## Blockchain snapshot structure
-It contains block time T, a new line, and then the below items, separated with a new line. Each item is a headless TSV list. The list terminates with a new line.
-1. Balance List - Each user's balance in Confidence Coin is ordered by wallet id. 
-   1. wallet id 
-   1. balance
-1. Validators List - A validators list ordered by Validator id
-   1. Validator id(As described above)
-   1. Address - IPv4/v6 or a domain address. It is used for sending transactions.
-1. DTPs list
-   1. DTP-id - the wallet id of the DTP
-   1. update time - the update time of this DTP in seconds
-   1. time to next update - time to next update as of the block creation time in seconds
-   1. Wallets - comma-separated list of Wallets inside that DTP group, including the DTP Wallet itself, so this list can never be empty. Wallet ids are based on their order in the Balance List above, starting from 0
-   1. Pending opt-out wallets - comma-separated list of Wallets inside that DTP group that will opt out after the next update transaction
-   1. Pending opt-in wallets - comma-separated list of Wallets outside that DTP group that will opt in after the next update transaction in their DTP
+# Government Incentive Program
+The Confidence Coin blockchain is not only focused on incentivizing its users and developers, but it also has a Government Incentive Program that is designed to promote and encourage government adoption of the platform. This program is designed to promote Confidence Coin blockchain as a government-friendly blockchain that can benefit the country and its people.
+The program works by allocating 1% of the block rewards to the Confidence Coin Foundation Wallet. These coins are then used to invest back into the development of the Confidence Coin blockchain, and to further promote its adoption and growth. However, the coins are also utilized as part of the Government Incentive Program.
+When users create wallets on the Confidence Coin blockchain, they are required to provide the country that will receive the block reward. When a new block is mined, before the reward is split between validators and holders, it is allocated to the Government Incentive Program. Each government that adopts Confidence Coin will receive the 1% reward instead of the Confidence Coin Foundation.
+The reward is then divided between the governments based on the percentage of coins that were transacted in the block. Whenever a wallet balance is increased, it counts toward the country that the wallet chose, thereby promoting the adoption and use of Confidence Coin blockchain in that country.
+The Government Incentive Program is an innovative and effective way to encourage government adoption of Confidence Coin blockchain, which can lead to a more transparent and efficient economy. By providing incentives to governments, Confidence Coin is promoting the use of blockchain technology in a way that benefits both the government and its citizens.
 
-## Topics
-Wallets and DTPs create topic items. They use the HTTP protocol to contact Validators. The list of the HTTP remotes is obtained from the Validators list in the snapshot that is hosted on IPFS by all the Validators and some other Wallets and DTPs. Those are the most popular files in Confidence Coin.
+# Capacity
+Confidence Coin has a hard-cap of 1,798,974,000,000 coins, which was based on the dollar circulation value in January 2020, before the COVID-19 pandemic. The daily reward for mining new coins is calculated using the following function, where X is the day starting from 1:
 
-HTML requests use JSON API. The response is a success or error code.
-In this documentation, I placed the HTML API in a table. The topic structure inlines all the columns and delimiters them with a tab.
-
-For example, the below documentation:
-|param|description|
-|-|-|
-|param 1| param1 description|
-|param 2| param2 description|
-|param 3| param3 description|
-
-Translates into the below JSON request
-```JSON
-{
-	"param1" : "data",
-	"param2" : "data",
-	"param3" : "data"
-}
-```
-
-And the below line in topics.
-```
-param1	param2	param3
-```
-
-### Opting requests
-Wallets can opt in and off to and from any DTP. 
-
-|param|description|
-|-|-|
-|wallet address|Curve25519 public key|
-|DTP id|DTP wallet address|
-|signature| Curve25519 signature|
-
-### Color Scoring
-There is a T seconds timeout waiting to get blocks from other validators.
- - If a block was announced and downloaded(from IPFS) within 0.5T, it gets a GREEN score, and the times will be recorded.
- - If it took less than T seconds to get an announcement and less than T seconds to get it from IPFS, then it scores YELLOW, and the times will be recorded.
- - Otherwise, it gets RED, and the attempt to get the block should halt. -1 will be recorded in that case for time.
-The top 1% of the total validators who scored RED by over 2/3 VALIDATORS are removed from the Validator list. They are ordered by the hash of the block id and the validator id. This is to create a random order.
-After removing Validators, T is doubled.
-
-In case no RED was removed, and there is less than 10% YELLOW, the time is reduced to have 10% YELLOW and up to 1% RED(not inclusive) by 2/3 votes, based on the last block cycle. For this calculation purpose, a RED with a low score will be calculated as T.
-
-The goal of this algorithm is to remove slow Validators and always operate at maximum network capacity. Aka not running into timeouts.
-This makes the block time inconsistent. It will improve as technology improves.
-
-|param|description|
-|-|-|
-|pubsub score| the time in integer seconds, round down it took to announce the block|
-|IPFS score| the time  in integer seconds, round down it took to download the block from IPNS|
-
-Note that topics are already sectioned by Validators, so there is no need to include a validator id. Also, there is no HTTP API for scoring. This is a particular internal action.
-
-### Register DTP
-A wallet can convert itself to DTP if it opt-out from other DTPs. 
-It must provide an update time in seconds for how often it will sync Wallet balances to the blockchain via the update transaction.
-
-|param|description|
-|-|-|
-|Wallet address| DTP wallet address|
-|update time| the time in seconds for the periodic update|
-|signature| Curve25519 signature|
-
-### DTP update transaction
-DTP must perform an update transaction within the update time from its conversion to DTP or the last update transaction. If it fails, it loos all the Wallets in the DTP group and converts back to regular Wallet.
-- DTP must not add or remove coins. The number of coins in the system before and after the update transaction should not change.
- - DTP can include one or multiple of its Wallet members. At least one is required.
- - DTP can also include Wallets that are not its member. The balance of those wallets cannot be decreased, only increased. It allows DTP to send coins to external Wallets without revealing the origin or the destination.
- - DTP can also send coins to new Wallets. In such a case, it must decide to what DTP the new Wallet will belong. It must be an existing DTP or non at all.
-
-Only the Wallets ids and the new balance are required when making the transaction. The ids come from the Balance list in the Blockchain snapshot. The snapshot must be fresh from the last ten snapshots. DTP should try to use the latest.
-
-|param|description|
-|-|-|
-|Block id| Block id for wallets ids mapping|
-|new Wallet addresses| Comma-delimited list of new wallet addresses, optionally concatenated with the DTP address(Wallet address is fixed length).
-|Wallets ids| Comma-delimited list of Wallets ids from the Balance List|
-|balance ids| Comma-delimited list of balances corresponding to the Wallets ids and the new Wallets|
-|signature| Curve25519 signature of the DTP|
-
-### Opting
-When opting for a DTP, the Wallet is automatically removed from other DTPs.
-To synchronize the off-chain transactions inside the DTP with opting requests. When the Wallet belongs to a DTP group, its opting requests be delayed until the next DTP update transaction or until it is automatically removed from the DTP because the DTP didn't update on time.
-
-|param|description|
-|-|-|
-|DTP id| The wallet address of the DTP|
-|opting| in/out to opt-in or out|
-|signature| Curve25519 signature|
-
-## Block structure
-Blocks use JSON API and have the below structure:
-
- - Block id - A running integer
- - Block creation time - used for DTP update transaction calculations and block rewards
- - Validators list CID
- - Validator id - the validator id in the Validators list
- - Validator IP - an IPv4/v6 address or a domain name where topics can be submitted
- - Topics[] - object array
-    -  Topic name - String
-    -  items[] - Objects array based on the name value
- - votes[] - objects array
- - CID - String
- - Validator signature of the fields above
-
-Note that there is no block hash in here. This is because the system is using CID.
-
-# Reward System
-
-## Block rewards
-Block time is calculated as the median block creation time of all the blocks with the same block id.
-
-Based on Block time, the system gives block rewards with the following block after the earliest block in a day, consisting of transaction fees and new coins.
-
-The reward is scored based on the stack, and there are penalties for scoring below 50% percentile in the below metrics.
- - Number of blocks created - It incentivizes Validators to stay online.
- - Number of Red scores sent - It decentivize validators to score Red.
- - Number of transactions processed(Each type is scored individually) - It incentivizes Validators to process transactions.
-
-Up to 50% penalty is deducted from the stake value based on the percentile position rounded to integer percent.
-
-## Capacity
-There are 1,798,974,000,000 hard-cap coins. It was based on the dollar circulation value in Jan 2020, right before the epidemic started.
-
-The daily reward is calculated using the below function, where X is a day starting from 1.<br>
 $f(X)=Max(0,-2,700X + 98,563,309)$
 
-It will be fully mined in 36,505 days(~100 years). 
+The coin supply will be fully mined in approximately 36,505 days, or roughly 100 years. This ensures that there is a finite supply of Confidence Coins and that the value of each coin may increase over time due to scarcity.
 
-## Transaction fees
-In a system where all the transactions are processed, there is no point in setting up transaction fees incentive on a transaction level. However, the system is more open to transaction DDOS attacks without transaction fees. Therefore transaction fees are set on a system level per transaction type.
+# Use Cases
+Confidence Coin is a versatile blockchain platform with many potential use cases. Here are a few examples:
+1. Company: Online Retailer Use Case: Customers can make purchases using DTP. The retailer can then use DTP to aggregate transactions and only reveal the final balance, providing greater privacy and security for their customers.
+2. Company: Health Insurance Provider Use Case: Customers can submit claims using DTP, which would allow for greater privacy and security of their personal and medical information. The insurance provider could use DTP to aggregate claims and only reveal the final balance, providing greater efficiency and privacy for their customers.
+3. Company: Ride-Sharing Service Use Case: Customers can pay for rides using DTP, providing a secure and private way to make payments. The ride-sharing service could use DTP to aggregate payments and only reveal the final balance, providing greater efficiency and privacy for their customers.
+4. Company: Music Streaming Service Use Case: Customers can subscribe to the service using DTP, providing a secure and private way to make payments. The streaming service could use DTP to aggregate subscription payments and only reveal the final balance, providing greater efficiency and privacy for their customers.
+5. Company: Real Estate Agency Use Case: Customers can make property transactions using DTP, providing greater security and privacy for their transactions. The real estate agency could use DTP to aggregate transactions and only reveal the final balance, providing greater privacy and security for their customers.
+Overall, Confidence Coin's fast and secure transaction processing, low fees, and unique incentive system make it a compelling platform for a wide range of use cases.
 
-Each day in the block follows the reward block. A vote is made to change the transaction fees. In case they are changed, the new value will be applied within a week of the change, starting from the block after the daily reward. The clock would be reset if additional changes were made during that time.
-
-## Confidence Coin foundation fee
-1% of the block rewards will be sent to the Confidence Coin Foundation Wallet. Instead of premining the coin or doing an IPO, we believe in a fair game. 
-Confidence Coin foundation will work hard to bring the Confidence Coin into the mainstream and maximize its value. 
-
-With a linear reward system, zero pre-mined coins, and a Foundation behind. Confidence Coin is set for success.
+# Conclusion
+In conclusion, Confidence Coin is a revolutionary blockchain platform that offers a unique reward system to its validators and holders. Its Decentralized Trusted Party (DTP) provides a secure and transparent way for businesses and individuals to transact with each other, while its Flash consensus mechanism enables the processing of over a million transactions in a single block. The government incentive program, funded by 1% of the block rewards, aims to promote the adoption of Confidence Coin by giving the reward to the governments based on the percentage of coins transacted in the block. Confidence Coin is still in development, but with its innovative technology and incentives, it has the potential to become one of the most successful blockchain platforms in the world. The platform also utilizes IPFS for file storage, providing a more efficient and decentralized way to store data. With its unique features and strong community support, Confidence Coin is poised to play a major role in shaping the future of blockchain technology.
