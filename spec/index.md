@@ -5,7 +5,8 @@ This document will serve as a guide to building Confidence Coin, which comprises
  - Confidence Coin CORE: This is the Kotlin-based validator app responsible for creating new blocks and snapshots.
  - Confidence Coin Bridge: This is a CORE GO helper app designed to facilitate calls to IPFS and report back to CORE.
  - Confidence Coin Wallet: This is the client wallet app, with the initial version available as an Android native app.
-For a more detailed understanding of how Confidence Coin works, please refer to the whitepaper available at [whitepaper](/whitepaper/).
+
+For a more detailed, non technical understanding of how Confidence Coin works, please refer to the whitepaper available at [whitepaper](/whitepaper/).
 
 ```
 +-------------+        +-------------+       +-------------+  
