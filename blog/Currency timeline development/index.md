@@ -1,4 +1,5 @@
 # Currency timeline development
+{% include header.md %}
 
 - 600 BC: The first coins were minted in Lydia (modern-day Turkey) made of electrum, a natural alloy of gold and silver.
 - 500 BC: The Greeks began using coins made of precious metals like gold and silver.
