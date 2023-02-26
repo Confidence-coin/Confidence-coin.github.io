@@ -1,0 +1,2 @@
+## The Team
+Our team is led by a highly experienced engineer with over 10 years of experience in Java, Kotlin, and SQL. They have worked in top tech companies, including Facebook (Meta) and DoubleVerify, and have developed a deep understanding of the technology behind cryptocurrencies. With their expertise in software engineering and their experience in developing successful projects, our team is well-equipped to bring Confidence Coin to market and ensure its success.
