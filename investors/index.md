@@ -7,7 +7,8 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick-theme.css"/>
 <style>
   .carousel iframe {
-    width: 600px;
+    max-width: 600px;
+    width: 100%;
     height: 480px;
     border: none;
   }
