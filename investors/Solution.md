@@ -1,5 +1,7 @@
-## Solution
-Confidence Coin is the solution to these challenges. It is powered by the Flash Consensus Mechanism, which optimizes the network transaction cycle into a single step of sharing a block. This dramatically shortens and simplifies the transaction cycle, making it faster and more secure.
+## The Solution
+Confidence Coin addresses the challenges of other cryptocurrencies in two ways: 
+- All the transactions must be made via a Decentralized Trusted Party (DTP). It aggregates off-chain transactions of its members and provides only the final balance updates to the blockchain. It is hiding any other transaction details from the public eye. 
+   - Each business has its own DTP, and DTPs are legal companies, ensuring trust in the transactions made via Confidence Coin.
+- Confidence Coin uses an evolution of the Proof of Stake (PoS), the Flash algorithm. With Flash, validators share transactions and votes via a new block that each validator creates, allowing for one-step, parallel consensus. Flash can process over a million balance updates in each block, making transactions ridiculously fast. 
 
-Confidence Coin also uses the Decentralized Trusted Party (DTP), which aggregates all transactions of its members and only provides balance updates. This ensures high-speed and high-privacy transactions, as it does not reveal the transaction origin, destination, or the amount involved.
-
+With the combination of DTP and Flash, Confidence Coin offers clean privacy and fast transactions.

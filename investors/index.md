@@ -63,7 +63,6 @@
     <div><iframe src="Market"></iframe></div>
     <div><iframe src="Competitive-Advantage"></iframe></div>
     <div><iframe src="Business-Model"></iframe></div>
-    <div><iframe src="Marketing-and-Sales"></iframe></div>
     <div><iframe src="Team"></iframe></div>
     <div><iframe src="Financial-Projections"></iframe></div>
     <div><iframe src="Conclusion"></iframe></div>
